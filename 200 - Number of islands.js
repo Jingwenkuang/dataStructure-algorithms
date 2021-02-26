@@ -19,17 +19,19 @@ var numIslands = function(grid) {
     var dfs = function(x, y){
       if (x >= 0 && y >= 0 && x < m && y < n && grid[x][y] === '1') {
         grid[x][y] = '0';
-        dfs(x + 1, y);
-        dfs(x, y + 1);
-        dfs(x - 1, y);
-        dfs(x, y - 1);
+        dfs(x + 1, y); //top
+        dfs(x, y + 1); //right
+        dfs(x - 1, y); //bottom
+        dfs(x, y - 1); //left
       }
     }
 
     for (let i = 0; i < m; i++) {
       for (let j = 0; j < n; j++) {
         if (grid[i][j] === '1'){
-          count ++;
+          count ++; 
+//if grid[i][j] = 1, increase the count, check for the left, right, bottom, top, 
+//set it to '0' if value is '1'.
           dfs(i, j);
         }
       }
