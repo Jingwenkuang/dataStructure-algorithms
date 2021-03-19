@@ -20,8 +20,10 @@
 // Input: nums = [9], target = 3
 // Output: 0
 
+//time O(T*N) where T is the target value, N is the size of input array
+//space O(T) where T is the target value, because of the call stack.
 var combinationSum4 = function(nums, target, memo = {}) {
-   if (typeof memo[target] != "undefined") return memo[target];
+   if (target in memo) return memo[target];
     if (target === 0) return 1;
    
     let result = 0;
