@@ -10,28 +10,67 @@ This is a partition so that each letter appears in at most one part.
 A partition like "ababcbacadefegde", "hijhklij" is incorrect, because it splits S into less parts.
 */
 
-var partitionLabels = function(S) {
+//greedy
+//time O(n^2) because of the lastIndexOf method inside of for loop;
+//space o(1) no more than 26 char
+//solution1
+var partitionLabels = function(S) {  //S = "ababcbacadefegdehijhklij"
 	
 	let result = [];
-
-
 	let start = 0;
-
-
 	let indexTarget = 0;
 
 
-	for (let i = 0; i < S.length; i++) {
+	for (let i = 0; i < S.length; i++) { //i =0,1...6
+		let indexLast = S.lastIndexOf(S[i]); //6,5,6
 
-		let indexLast = S.lastIndexOf(S[i]);
+		indexTarget = Math.max(indexTarget, indexLast); //6
 
-		indexTarget = Math.max(indexTarget, indexLast);
-
-		if (i == indexTarget) {
+		if (i == indexTarget) { //i=6
 			result.push(indexTarget - start + 1);
-			start = i + 1;
+			start = i + 1; //7
 		}
 	}
 
 	return result;
-};``
+};
+
+//solution2 using Map
+//time: o(n)
+var partitionLabels = function(S) {
+    
+    let map = new Map();
+    
+    for(let i = 0; i < S.length; i++) {
+        map.set(S[i], i); //set key and value pairs
+    }
+    /*Map {
+  'a' => 8,
+  'b' => 5,
+  'c' => 7,
+  'd' => 14,
+  'e' => 15,
+  'f' => 11,
+  'g' => 13,
+  'h' => 19,
+  'i' => 22,
+  'j' => 23,
+  'k' => 20,
+  'l' => 21 }
+  */
+    
+    let start = 0, indexTarget = 0, res = [];
+    for(let i = 0; i < S.length; i++) {
+        let cur = S[i];
+        indexTarget = Math.max(indexTarget, map.get(cur));
+       
+        if(indexTarget == i) {
+            res.push(i - start + 1);
+            start = i + 1;
+        }
+    }
+    return res;
+};
+
+let S = "ababcbacadefegdehijhklij";
+console.log(partitionLabels(S))
