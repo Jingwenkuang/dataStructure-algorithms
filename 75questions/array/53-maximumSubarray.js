@@ -18,6 +18,9 @@ Input: nums = [5,4,-1,7,8]
 Output: 23
 */
 
+
+//kanada algo
+//time o(n), space o(1)
 var maxSubArray = function(nums) {
     let maxSoFar = nums[0];
     let maxEndHere = nums[0];
