@@ -32,9 +32,12 @@ Output: 1
  * @param {TreeNode} root
  * @return {number}
  */
+
+//time o(n), space o(n) because of the call stack.
 var maxDepth = function(root) {
   if (!root) return 0;
-  return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
+  return 1+ Math.max(maxDepth(root.left), maxDepth(root.right));
 }
 
-console.log(maxDepth([1, null, 2]))
+console.log(maxDepth([1, null, 2]));
+console.log(maxDepth([3,9,20,null,null,15,7]));
