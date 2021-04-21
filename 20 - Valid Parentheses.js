@@ -11,24 +11,36 @@
 // Input: s = "()"
 // Output: true
 
-var isValid = function(s) {
-    const pairs = {
-        '(': ')',
-        '{': '}',
-        '[': ']',
+var exist = (board, word) => {
+  const row = board.length,
+        col = board[0].length;
+     
+  const dfs = (r, c, idx) => {
+    if (idx === word.length) return true; // We are done
+    if (r >= row || r < 0 || c >= col || c < 0) return false; // Out of bounds
+
+    let char = board[r][c]; // Store char in temp var
+    if (char !== word[idx]) return false; // No match
+    board[r][c] = '#'; // Mark as visited
+
+    if (
+      dfs(r + 1, c, idx + 1) ||
+      dfs(r - 1, c, idx + 1) ||
+      dfs(r, c + 1, idx + 1) ||
+      dfs(r, c - 1, idx + 1)
+    )
+      return true; // Keep checking
+
+    board[r][c] = char; // Done visiting, set element back to char
+  };
+
+  for (let r = 0; r < row; r++) {
+    for (let c = 0; c < col; c++) {
+      if (dfs(r, c, 0)) return true; // Start dfs from each element
     }
-    let stack = [];
-    
-    for (let i = 0; i < s.length; i++) {
-        let char = s[i];
-        if (pairs[char]) {
-            stack.push(char)
-        }
-        if (char === ')' || char === '}' || char === ']') {
-            while(pairs[stack.pop()] !== char) return false;
-        }
-    }
-    return stack.length === 0;
+  }
+
+  return false;
 };
 
 let s = '({])';
