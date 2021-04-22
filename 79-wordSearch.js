@@ -21,9 +21,28 @@ var exist = function(board, word) {
     let m = board.length;
     let n = board[0].length; 
     
+    function bfs(board, word, i, j, idx) {
+      if (word.length === idx) return true;
+      if (i < 0 || j < 0 || i >= m || j >= n || board[i][j] !== word[idx]) return false;
+      board[i][j] = '#';
+      console.log(board)
+      if (bfs(board, word, i + 1, j, idx + 1) ||
+          bfs(board, word, i, j + 1, idx + 1) ||
+          bfs(board, word, i - 1, j, idx + 1) ||
+          bfs(board, word, i, j - 1, idx + 1)) return true;
+      console.log(i, j, idx)
+      board[i][j] = word[idx]
+    }
     for (let i = 0; i < m; i++) {
         for (let j = 0; j < n; j++ ) {
-            
+            if (bfs(board, word, i, j, 0)) return true;
         }
     }
+    return false;
 };
+
+
+
+let board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]],
+    word = 'ABCB';
+console.log(exist(board, word));
