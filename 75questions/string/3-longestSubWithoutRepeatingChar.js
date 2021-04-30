@@ -23,6 +23,23 @@ Input: s = ""
 Output: 0
 */
 
-function longestSubstring(str) {
-  
-}
+var lengthOfLongestSubstring = function(s) {
+    let longestCount= 0; 
+    let currentCount = 0; 
+    let hashMap = new Map();
+ 
+    for (let i = 0; i < s.length; i++) {
+        if (hashMap.has(s[i]) && s[i] === s[i - 1]) {
+            hashMap.clear();
+               hashMap.set(s[i], i);
+            currentCount = 1;
+        } else {
+            hashMap.set(s[i], i);
+            currentCount += 1;
+            // console.log(currentCount)
+            longestCount = Math.max(longestCount, currentCount)
+        }
+        // console.log(hashMap)
+    }
+    return longestCount;
+};
