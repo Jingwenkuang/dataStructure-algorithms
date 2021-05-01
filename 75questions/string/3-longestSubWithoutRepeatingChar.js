@@ -23,23 +23,49 @@ Input: s = ""
 Output: 0
 */
 
+//solution 1, time: o(n^2), space o(n)
+// var lengthOfLongestSubstring = function(s) {
+//   let count = 0; 
+
+//   for (let i = 0; i < s.length; i++) {
+//     // let char = s[i];
+//     let set = new Set();
+    
+//     for(let j = i; j < s.length; j++) {
+//       let char = s[j]
+//       if (set.has(char)){
+//         break;
+//       } else {
+//         set.add(char);
+//       }
+//     count = Math.max(count, set.size)
+//     }
+
+//   }
+//   return count;
+// };
+
+//solution 2 - sliding window
+//time o(n)
 var lengthOfLongestSubstring = function(s) {
-    let longestCount= 0; 
-    let currentCount = 0; 
-    let hashMap = new Map();
- 
-    for (let i = 0; i < s.length; i++) {
-        if (hashMap.has(s[i]) && s[i] === s[i - 1]) {
-            hashMap.clear();
-               hashMap.set(s[i], i);
-            currentCount = 1;
-        } else {
-            hashMap.set(s[i], i);
-            currentCount += 1;
-            // console.log(currentCount)
-            longestCount = Math.max(longestCount, currentCount)
-        }
-        // console.log(hashMap)
+  let count = 0;
+  let i = 0; 
+  let j = 0; 
+  let set = new Set();
+
+  while(i < s.length && j < s.length) {
+    let char = s[j];
+    if (!set.has(char)) {
+      set.add(char);
+      j++;
+      count = Math.max(count, j - i);
+    } else {
+      set.delete(s[i]);
+      i++;
     }
-    return longestCount;
-};
+  }
+  return count;
+}
+
+
+console.log(lengthOfLongestSubstring("abcabcbb"))
