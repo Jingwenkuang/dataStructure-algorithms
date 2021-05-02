@@ -19,5 +19,29 @@ The substring "BBBB" has the longest repeating letters, which is 4.
 
 */
 var characterReplacement = function(s, k) {
-    
+    let maxCount = 0;
+    let left = 0; 
+    let right = 0; 
+    let visited = {};
+
+    while(left < s.length && right < s.length) {
+      let char = s[right];
+      if (visited[char]) {
+        visited[char] += 1
+      } else {
+        visited[char] = 1;
+      }
+      console.log(visited)
+      maxCount = Math.max(visited[char], maxCount);
+      console.log(maxCount)
+      if (right - left + 1 - maxCount > k) {
+        visited[s[left]] --;
+        left ++;
+      }
+      right ++;
+    }
+    return right - left;
 };
+
+console.log(characterReplacement('AABABBA', 1)) //4
+// console.log(characterReplacement('ABAB', 2)) //4
