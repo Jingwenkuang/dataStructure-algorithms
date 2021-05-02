@@ -46,7 +46,7 @@ Output: 0
 // };
 
 //solution 2 - sliding window
-//time o(n)
+//time o(n), space o(k), where k is the size of the set
 var lengthOfLongestSubstring = function(s) {
   let count = 0;
   let i = 0; 
