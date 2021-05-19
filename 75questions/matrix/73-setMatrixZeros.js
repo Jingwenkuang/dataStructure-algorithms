@@ -13,22 +13,62 @@ Output: [[1,0,1],[0,0,0],[1,0,1]]
 Input: matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]
 Output: [[0,0,0,0],[0,4,5,0],[0,3,1,0]]
 */
-var setZeroes = function(matrix) {
-     let col0 = 1, row = matrix.length, col = matrix[0].length;
-    
-    for(let i = 0; i < row; i++) {
-        if(matrix[i][0] === 0) col0 = 0;
-        for(let j = 1; j < col; j++) {
-            if(matrix[i][j] === 0) {
-                matrix[i][0] =  matrix[0][j] = 0;
-            }
-        }
+
+//SOLUTION 1 
+function setZeroes(matrix) {
+  let track = []; //[[0,0],[0,3]]
+
+  for (let i = 0; i < matrix.length; i++) {
+    for (let j = 0; j < matrix[0].length; j++){
+      if (matrix[i][j] === 0) {
+        track.push([i, j])
+        // console.log(track)
+      }
     }
-    
-    for(let i = row-1; i >= 0; i--) {
-        for(let j = col-1; j > 0; j--) {
-            if(matrix[i][0] === 0 || matrix[0][j] === 0) matrix[i][j] = 0;
-        }
-        if(col0 === 0) matrix[i][0] = 0;
-    }   
-};
+  }
+
+  for (let i = 0; i < track.length; i++) {
+    let [x, y] = track[i];
+
+    for(let j = 0; j < matrix[0].length; j++) {
+      matrix[x][j] = 0;
+    }
+
+    for (let k = 0; k < matrix.length; k++) {
+      matrix[k][y] = 0; 
+    }
+  }
+ return matrix;
+}
+
+//SOLUTION 2
+//time o(m * n), space o(m + n)
+function setZeroes(matrix) {
+  let row = matrix.length;
+  let col = matrix[0].length; 
+  let rows = new Set();
+  let columns = new Set();
+
+  for (let i = 0; i < row; i++) {
+    for (let j = 0; j < col; j++) {
+      if (matrix[i][j] === 0) {
+        rows.add(i);
+        columns.add(j);
+      }
+    }
+  }
+
+  for (let i = 0; i < row; i++) {
+    for (let j = 0; j < col; j++) {
+      if (rows.has(i) || columns.has(j)){
+        matrix[i][j] = 0;
+      }
+    }
+  }
+  return matrix;
+}
+
+
+//solution 3
+
+console.log(setZeroes([[0,1,2,0],[3,4,5,2],[1,3,1,5]])); //[[0,0,0,0],[0,4,5,0],[0,3,1,0]]
