@@ -4,6 +4,7 @@ input:
 output: 
 'best! the is AlgoExpert'
 */
+//time o(n), space o(n)
 function reverseWordsInString(string) {
   const words = [];
   let startOfWord = 0; 
