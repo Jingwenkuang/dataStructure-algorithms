@@ -7,44 +7,51 @@ output: ["t", "t", "h", "i", "s", "a", "d", "d", "e", "e", "m", "!"]
 //space o(c) where c is the number of unique characters across all words
 function minimumCharactersForWords(words) {
   // Write your code here.
-  let maxCharFreq = {};
-	for(let i = 0; i < words.length; i++){
-		let word = countCharFrequences(words[i]);
-		updateMaxFreq(word, maxCharFreq)
-	}
-	return makeArrayFromFreq(maxCharFreq)
+  const maxCharactersFreq = {};
+  for (const word of words) {
+    const charactersCount = countCharacterFrequencies(word);
+    // console.log(charactersCount)
+    updateMaxCharFreq (charactersCount, maxCharactersFreq)
+  }
+  return makeArrayFromCharacterFreq(maxCharactersFreq);
 }
 
-function countCharFrequences(string) {
-	const charFreq = {};
-	for(const char of string){
-		if (! (char in charFreq)) {
-			charFreq[char] = 0;
-		}
-		charFreq[char] += 1;
-	}
-	return charFreq;
+function countCharacterFrequencies(string){
+ const characterFreq = {};
+
+ for (const char of string) {
+   if (! (char in characterFreq)){
+     characterFreq[char] = 0; 
+   }
+   characterFreq[char] += 1;
+ }
+ return characterFreq;
 }
 
-function updateMaxFreq(frequencies, maxFreq){
-	for (const char in frequencies){
-		const freq = frequencies[char];
-		if (char in maxFreq){
-			maxFreq[char] = Math.max(freq, maxFreq[char]);
-		} else {
-			maxFreq[char] = freq;
-		}
-	}
+function updateMaxCharFreq(freq, maxFreq){
+
+  for(const char in freq){
+    const frequency = freq[char];
+
+    if (char in maxFreq){
+      maxFreq[char] = Math.max(frequency, maxFreq[char])
+    } else {
+      maxFreq[char] = frequency;
+    }
+  }
 }
 
-function makeArrayFromFreq(charFreq){
-	const characters = [];
-	for (const char in charFreq){
-		const freq = charFreq[char];
-		
-		for (let i = 0; i < freq; i++) {
-			characters.push(char);
-		}
-	}
-	return characters;
+function makeArrayFromCharacterFreq(maxFreq) {
+  const characters = [];
+
+  for (const char in maxFreq){
+    const freq = maxFreq[char];
+
+    for (let i = 0; i < freq; i++) {
+      characters.push(char)
+    }
+  }
+  return characters;
 }
+console.log(minimumCharactersForWords(["this", "that", "did", "deed", "them!", "a"]));
+//[ 't', 't', 'h', 'i', 's', 'a', 'd', 'd', 'e', 'e', 'm', '!' ]
