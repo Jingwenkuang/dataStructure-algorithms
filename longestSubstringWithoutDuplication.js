@@ -8,17 +8,26 @@ output: 'mentisac'
 */
 
 function longestSubstringWithoutDuplication(string){
-  const longestSubstring = '';
-  const current = '';
-  let start = 0; 
+  const lastSeen = {};
+  let longest = [0, 1];
+  let startIdx = 0; 
   
-  for (let i = start; i < string.length; i++){
+  for (let i = 0; i < string.length; i++){
     const char = string[i];
    
-    if (! (char in current)){
-      current += char;
+    if (char in lastSeen){
+      startIdx = Math.max(startIdx, lastSeen[char] + 1)
     }
+
+    // console.log(startIdx)
+    if (longest[1] - longest[0] < i + 1 - startIdx){
+      longest = [startIdx, i + 1]
+      // console.log(longest)
+    }
+    lastSeen[char] = i; 
+    
   }
+  return string.slice(longest[0], longest[1])
 }
 
 console.log(longestSubstringWithoutDuplication('clementisacap'))
