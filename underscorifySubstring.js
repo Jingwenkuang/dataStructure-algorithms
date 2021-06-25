@@ -5,6 +5,9 @@ substring = "test"
 output: "_test_this is a _testtest_ to see if _testestest_ it works"
 */
 
+
+//time o(n+m), where n is the main string and m is the length of the substring
+//space o(n)
 function underscorifySubstring(string, substring){
   const locations = collapse(getLocations(string, substring));
   return underscorify(string, locations);
